@@ -25,6 +25,9 @@ HTML, CSS, and vanilla JavaScript. No frameworks, servers, packages, or accounts
 3. You can also drag `index.html` into a browser window.
 
 No install and no internet connection are required. Optional system fonts may look extra handwritten when available; fallbacks still work offline.
+<img width="1408" height="881" alt="Screenshot 2026-10-12 at 12 48 18 AM" src="https://github.com/user-attachments/assets/816c93a0-7050-4c86-8e2d-f2a1191e1e01" />
+<img width="1408" height="881" alt="Screenshot 2026-10-12 at 12 48 37 AM" src="https://github.com/user-attachments/assets/86f88a11-4ce2-43ff-a2d2-91706f570104" />
+
 
 ## How to use the extras
 
@@ -37,6 +40,8 @@ No install and no internet connection are required. Optional system fonts may lo
 **Music:** Choose local audio files (mp3, wav, etc.). Files are never uploaded. The record spins only while audio is actually playing. Pause, seek, and volume control the same files.
 
 **Theme:** Use the moon/sun control in the header. The choice is remembered.
+<img width="1408" height="881" alt="Screenshot 2026-10-12 at 12 48 22 AM" src="https://github.com/user-attachments/assets/6f58e997-0097-41e9-81ef-0c12bc29db46" />
+
 
 **Stickers:** Click a sticker to pin or unpin it. Reset stickers clears the board.
 
