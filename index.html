@@ -194,40 +194,273 @@
               </div>
             </div>
           </section>
+
+          <!-- Strawberry Photobooth Window -->
+          <section class="window photobooth-window" id="photobooth-window" aria-labelledby="photobooth-heading">
+            <div class="window-bar">
+              <div class="bar-title-group">
+                <h2 id="photobooth-heading">Strawberry photobooth 🍓</h2>
+                <span class="booth-subtag">retro snapshot studio</span>
+              </div>
+              <div class="booth-mode-pills" role="tablist" aria-label="Photobooth layout mode">
+                <button type="button" class="mode-pill is-active" data-mode="strawberry" role="tab" aria-selected="true" id="mode-tab-strawberry">🍓 Strawberry frame</button>
+                <button type="button" class="mode-pill" data-mode="strip" role="tab" aria-selected="false" id="mode-tab-strip">🎞 Photo strip</button>
+                <button type="button" class="mode-pill" data-mode="collage" role="tab" aria-selected="false" id="mode-tab-collage">🪞 Scrapbook collage</button>
+              </div>
+            </div>
+            <div class="window-body">
+              <div class="booth-toolbar">
+                <div class="toolbar-row">
+                  <div class="toolbar-item">
+                    <label class="file-btn booth-upload-btn" for="booth-file-input">
+                      <span>📷 Add photos</span>
+                    </label>
+                    <input id="booth-file-input" class="visually-hidden" type="file" accept="image/*" multiple />
+                  </div>
+                  <button type="button" class="btn btn-ghost" id="booth-demo-btn">🍓 Try demo photos</button>
+                  <div class="toolbar-item border-select-item">
+                    <label for="booth-border-select" class="field-label-inline">Border:</label>
+                    <select id="booth-border-select">
+                      <option value="strawberry-milk">Strawberry milk (cream)</option>
+                      <option value="berry-gingham">Berry gingham (picnic)</option>
+                      <option value="ruby-sweet">Ruby sweet (deep red)</option>
+                      <option value="starry-plum">Starry plum (dark berry)</option>
+                      <option value="vintage-polaroid">Vintage polaroid</option>
+                    </select>
+                  </div>
+                  <div class="toolbar-item date-toggle-item">
+                    <label class="checkbox-inline" for="booth-date-toggle">
+                      <input type="checkbox" id="booth-date-toggle" class="checkbox" checked />
+                      <span>Date stamp</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="toolbar-row caption-row">
+                  <label for="booth-caption-input" class="visually-hidden">Photo caption</label>
+                  <input id="booth-caption-input" maxlength="48" type="text" placeholder="sweet caption… e.g. berry sweet memories ♡" value="berry sweet memories ♡" />
+                  <button type="button" class="text-btn" id="booth-reset-stage" title="Reset all photos and stickers in booth">Clear stage</button>
+                </div>
+              </div>
+
+              <!-- Photobooth Interactive Canvas / Viewport -->
+              <div class="booth-stage-container" id="booth-stage-container">
+                <div class="booth-stage mode-strawberry" id="booth-stage">
+                  <!-- SVG Strawberry Clip Path Definition -->
+                  <svg class="strawberry-defs" width="0" height="0" aria-hidden="true">
+                    <defs>
+                      <clipPath id="strawberry-clip" clipPathUnits="objectBoundingBox">
+                        <path d="M 0.5, 0.15
+                                 C 0.62, 0.15 0.88, 0.19 0.90, 0.42
+                                 C 0.92, 0.62 0.76, 0.82 0.53, 0.94
+                                 C 0.51, 0.95 0.49, 0.95 0.47, 0.94
+                                 C 0.24, 0.82 0.08, 0.62 0.10, 0.42
+                                 C 0.12, 0.19 0.38, 0.15 0.5, 0.15 Z" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+
+                  <!-- Strawberry Cutout Frame Mode View -->
+                  <div class="strawberry-frame-wrap" id="strawberry-frame-wrap">
+                    <div class="strawberry-body-container" id="strawberry-body-container">
+                      <div class="strawberry-photo-area" id="strawberry-photo-area">
+                        <!-- Draggable photo elements rendered here -->
+                      </div>
+                      <div class="strawberry-seeds-overlay" aria-hidden="true"></div>
+                    </div>
+                    <div class="strawberry-leaves-top" aria-hidden="true">
+                      <svg viewBox="0 0 240 90" class="strawberry-crown-svg">
+                        <!-- Stem -->
+                        <path d="M 115,8 C 114,24 117,38 117,45 L 123,45 C 123,38 126,24 125,8 C 122,5 118,5 115,8 Z" class="crown-stem" />
+                        <!-- Calyx leaves -->
+                        <path d="M 120,44 C 95,20 60,30 35,46 C 65,49 85,50 110,48 Z" class="crown-leaf leaf-left-outer" />
+                        <path d="M 120,44 C 100,28 80,36 65,58 C 88,58 106,53 118,48 Z" class="crown-leaf leaf-left-inner" />
+                        <path d="M 120,44 C 114,28 126,28 120,68 C 124,52 124,46 120,44 Z" class="crown-leaf leaf-center" />
+                        <path d="M 120,44 C 140,28 160,36 175,58 C 152,58 134,53 122,48 Z" class="crown-leaf leaf-right-inner" />
+                        <path d="M 120,44 C 145,20 180,30 205,46 C 175,49 155,50 130,48 Z" class="crown-leaf leaf-right-outer" />
+                        <!-- Flower accent -->
+                        <circle cx="120" cy="46" r="5" class="crown-flower-center" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Photo Strip Mode View (vertical 3-photo booth strip) -->
+                  <div class="photo-strip-wrap" id="photo-strip-wrap" hidden>
+                    <div class="strip-header">
+                      <span class="strip-bow">🎀</span>
+                      <p class="strip-brand">DONEZO PHOTOBOOTH</p>
+                      <span class="strip-star">✦</span>
+                    </div>
+                    <div class="strip-slots-container" id="strip-slots-container">
+                      <div class="strip-slot" data-slot="0">
+                        <div class="slot-photo-holder"></div>
+                        <span class="slot-placeholder">drop or upload photo 1 🍓</span>
+                      </div>
+                      <div class="strip-slot" data-slot="1">
+                        <div class="slot-photo-holder"></div>
+                        <span class="slot-placeholder">drop or upload photo 2 🍓</span>
+                      </div>
+                      <div class="strip-slot" data-slot="2">
+                        <div class="slot-photo-holder"></div>
+                        <span class="slot-placeholder">drop or upload photo 3 🍓</span>
+                      </div>
+                    </div>
+                    <div class="strip-footer">
+                      <p class="strip-caption-text" id="strip-caption-display">berry sweet memories ♡</p>
+                      <p class="strip-date-text" id="strip-date-display"></p>
+                    </div>
+                  </div>
+
+                  <!-- Freeform Scrapbook Collage Mode View -->
+                  <div class="collage-wrap" id="collage-wrap" hidden>
+                    <div class="collage-board" id="collage-board">
+                      <!-- Polaroid cards with tape placed here -->
+                    </div>
+                  </div>
+
+                  <!-- Placed draggable stickers on the stage -->
+                  <div class="booth-placed-stickers" id="booth-placed-stickers"></div>
+
+                  <!-- Empty upload prompt when no photos loaded -->
+                  <div class="booth-empty-prompt" id="booth-empty-prompt">
+                    <div class="empty-prompt-bubble">
+                      <p class="prompt-icon">🍓</p>
+                      <p class="prompt-title">Drag & drop photos here</p>
+                      <p class="prompt-subtitle">or click <strong>Add photos</strong> above to start your berry collage!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Floating micro toolbar for the active photo -->
+                <div class="active-photo-bar" id="active-photo-bar" hidden>
+                  <span class="bar-tag">Selected photo:</span>
+                  <div class="bar-buttons">
+                    <button type="button" class="mini-btn" id="photo-zoom-in" title="Zoom in">🔍+</button>
+                    <button type="button" class="mini-btn" id="photo-zoom-out" title="Zoom out">🔍−</button>
+                    <button type="button" class="mini-btn" id="photo-rotate-left" title="Tilt left">↺</button>
+                    <button type="button" class="mini-btn" id="photo-rotate-right" title="Tilt right">↻</button>
+                    <button type="button" class="mini-btn" id="photo-layer-up" title="Bring to top">▲ front</button>
+                    <button type="button" class="mini-btn" id="photo-layer-down" title="Send to back">▼ back</button>
+                    <button type="button" class="mini-btn mini-btn-danger" id="photo-delete" title="Remove photo">✕ delete</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Photobooth Sticker Tin / Drawer -->
+              <div class="booth-stickers-drawer">
+                <div class="drawer-header">
+                  <span class="field-label">Tap a sticker to drop onto your photo:</span>
+                  <button type="button" class="text-btn" id="booth-stickers-clear-btn">Remove stickers</button>
+                </div>
+                <div class="booth-stickers-grid" id="booth-stickers-grid" role="group" aria-label="Add strawberry photobooth sticker"></div>
+              </div>
+
+              <!-- Export and Scrapbook Action Buttons -->
+              <div class="booth-actions-row">
+                <button type="button" class="btn btn-primary" id="booth-download-btn">
+                  <span>💾 Download photo</span>
+                </button>
+                <button type="button" class="btn btn-soft" id="booth-pin-btn">
+                  <span>📌 Pin to scrapbook</span>
+                </button>
+                <a id="booth-download-link" class="visually-hidden" download="donezo-strawberry-photobooth.png"></a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Persistent Scrapbook Board Window -->
+          <section class="window scrapbook-window" id="scrapbook-window" aria-labelledby="scrapbook-heading">
+            <div class="window-bar">
+              <div class="bar-title-group">
+                <h2 id="scrapbook-heading">Scrapbook wall ♡</h2>
+                <span class="memory-count-chip" id="scrapbook-count-chip">0 memories</span>
+              </div>
+              <button type="button" class="text-btn" id="scrapbook-clear-btn">Clear wall</button>
+            </div>
+            <div class="window-body">
+              <p class="hint">Memories you pin from the strawberry photobooth stay on this board.</p>
+              <div class="scrapbook-pinboard" id="scrapbook-pinboard" aria-label="Pinned scrapbook memories"></div>
+              <div class="empty-state" id="scrapbook-empty-state">
+                <p class="empty-icon" aria-hidden="true">🍓</p>
+                <p>Your scrapbook wall is waiting for its first memory.<br />Create a photo above and tap <strong>Pin to scrapbook</strong>!</p>
+              </div>
+            </div>
+          </section>
         </main>
 
         <aside class="col col-right">
           <section class="window music-window" aria-labelledby="music-heading">
             <div class="window-bar">
               <h2 id="music-heading">Music corner</h2>
-              <span class="now-playing-chip">now playing</span>
+              <span class="now-playing-chip" id="music-chip">now playing</span>
             </div>
             <div class="window-body">
-              <div class="vinyl-stage">
-                <div class="tonearm" id="tonearm" aria-hidden="true"></div>
-                <div class="vinyl" id="vinyl" aria-hidden="true">
-                  <div class="vinyl-grooves"></div>
-                  <div class="vinyl-label">♡</div>
+              <div class="music-tabs" role="tablist" aria-label="Audio player mode">
+                <button type="button" class="music-tab-btn is-active" id="tab-vinyl-btn" role="tab" aria-selected="true">Vinyl player ♫</button>
+                <button type="button" class="music-tab-btn" id="tab-spotify-btn" role="tab" aria-selected="false">Spotify corner 🍓</button>
+              </div>
+
+              <!-- Local Vinyl Player Section -->
+              <div class="music-section" id="vinyl-player-section">
+                <div class="vinyl-stage">
+                  <div class="tonearm" id="tonearm" aria-hidden="true"></div>
+                  <div class="vinyl" id="vinyl" aria-hidden="true">
+                    <div class="vinyl-grooves"></div>
+                    <div class="vinyl-label">♡</div>
+                  </div>
                 </div>
+                <p class="track-title" id="track-title">choose a song for today's little soundtrack ♡</p>
+                <p class="track-meta" id="track-meta">no track yet — files stay on your computer</p>
+                <div class="player-controls">
+                  <button type="button" class="icon-round" id="prev-track" aria-label="Previous track" disabled>⏮</button>
+                  <button type="button" class="icon-round play-btn" id="play-pause" aria-label="Play" disabled>▶</button>
+                  <button type="button" class="icon-round" id="next-track" aria-label="Next track" disabled>⏭</button>
+                </div>
+                <label class="visually-hidden" for="seek">Playback progress</label>
+                <input id="seek" type="range" min="0" max="0" value="0" step="0.1" disabled />
+                <div class="time-row">
+                  <span id="time-elapsed">0:00</span>
+                  <span id="time-total">0:00</span>
+                </div>
+                <label class="field-label" for="volume">Volume</label>
+                <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" />
+                <label class="file-btn" for="audio-files">Choose local songs</label>
+                <input id="audio-files" class="visually-hidden" type="file" accept="audio/*" multiple />
+                <p class="hint">Pick mp3, wav, or similar files from this computer. Nothing is uploaded.</p>
               </div>
-              <p class="track-title" id="track-title">choose a song for today's little soundtrack ♡</p>
-              <p class="track-meta" id="track-meta">no track yet — files stay on your computer</p>
-              <div class="player-controls">
-                <button type="button" class="icon-round" id="prev-track" aria-label="Previous track" disabled>⏮</button>
-                <button type="button" class="icon-round play-btn" id="play-pause" aria-label="Play" disabled>▶</button>
-                <button type="button" class="icon-round" id="next-track" aria-label="Next track" disabled>⏭</button>
+
+              <!-- Spotify Player Section -->
+              <div class="music-section" id="spotify-player-section" hidden>
+                <div class="spotify-input-group">
+                  <label class="field-label" for="spotify-input">Paste Spotify track, playlist, or album link:</label>
+                  <div class="spotify-input-row">
+                    <input id="spotify-input" type="url" placeholder="https://open.spotify.com/playlist/..." />
+                    <button type="button" class="btn btn-primary" id="spotify-load-btn">Load</button>
+                  </div>
+                </div>
+                <div class="spotify-presets">
+                  <span class="field-label">Cozy playlists:</span>
+                  <div class="presets-row">
+                    <button type="button" class="preset-chip" data-preset="37i9dQZF1DXcBWIGoYBM5M">🍓 Strawberry Lofi</button>
+                    <button type="button" class="preset-chip" data-preset="37i9dQZF1DX4t95PaoR1zy">🌸 Pink Bedroom Pop</button>
+                    <button type="button" class="preset-chip" data-preset="37i9dQZF1DX8Uebhn9wzrS">☕ Cozy Study</button>
+                  </div>
+                </div>
+                <div class="spotify-embed-container" id="spotify-embed-container">
+                  <iframe
+                    id="spotify-iframe"
+                    title="Spotify Player"
+                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0"
+                    width="100%"
+                    height="152"
+                    frameborder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                  </iframe>
+                </div>
+                <p class="hint spotify-info-note">
+                  🔒 <em>Browser Note:</em> Web browsers cannot detect other apps or audio playing on your device due to privacy sandboxing. Spotify embeds let you listen right here in Donezo safely!
+                </p>
               </div>
-              <label class="visually-hidden" for="seek">Playback progress</label>
-              <input id="seek" type="range" min="0" max="0" value="0" step="0.1" disabled />
-              <div class="time-row">
-                <span id="time-elapsed">0:00</span>
-                <span id="time-total">0:00</span>
-              </div>
-              <label class="field-label" for="volume">Volume</label>
-              <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" />
-              <label class="file-btn" for="audio-files">Choose local songs</label>
-              <input id="audio-files" class="visually-hidden" type="file" accept="audio/*" multiple />
-              <p class="hint">Pick mp3, wav, or similar files from this computer. Nothing is uploaded.</p>
             </div>
           </section>
 
@@ -295,6 +528,23 @@
       <div class="dialog-actions">
         <button type="button" class="btn btn-ghost" id="confirm-cancel">Keep it</button>
         <button type="button" class="btn btn-danger" id="confirm-ok">Delete</button>
+      </div>
+    </dialog>
+
+    <!-- Scrapbook Photo Enlargement Dialog -->
+    <dialog class="photo-modal" id="photo-modal">
+      <div class="photo-modal-content">
+        <div class="photo-modal-header">
+          <p class="photo-modal-title" id="photo-modal-title">Strawberry Memory ♡</p>
+          <button type="button" class="icon-btn" id="photo-modal-close" aria-label="Close photo preview">✕</button>
+        </div>
+        <div class="photo-modal-body">
+          <img id="photo-modal-img" alt="Enlarged scrapbook collage" src="" />
+        </div>
+        <div class="photo-modal-actions">
+          <a id="photo-modal-download" class="btn btn-primary" download="donezo-memory.png">💾 Save to computer</a>
+          <button type="button" class="btn btn-ghost" id="photo-modal-dismiss">Close</button>
+        </div>
       </div>
     </dialog>
 

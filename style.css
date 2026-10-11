@@ -12,6 +12,14 @@
   --mint: #bfe8d4;
   --cream: #fff6ea;
   --cherry: #d6455d;
+  --strawberry-red: #e33854;
+  --strawberry-dark: #b8233c;
+  --strawberry-pink: #ffb8cf;
+  --strawberry-leaf: #4fa164;
+  --strawberry-leaf-dark: #377d48;
+  --strawberry-seed: #ffe27a;
+  --washi-tape: rgba(255, 230, 242, 0.78);
+  --cork: #fff2e4;
   --window-bar: #ffd6e6;
   --gingham: rgba(255, 182, 204, 0.28);
   --shadow: 4px 6px 0 rgba(199, 77, 120, 0.18);
@@ -36,6 +44,14 @@
   --mint: #7fbfa4;
   --cream: #4a3058;
   --cherry: #ff8aa0;
+  --strawberry-red: #ff5277;
+  --strawberry-dark: #cf2d50;
+  --strawberry-pink: #f28ab0;
+  --strawberry-leaf: #64ca80;
+  --strawberry-leaf-dark: #4ea866;
+  --strawberry-seed: #ffea9e;
+  --washi-tape: rgba(95, 48, 108, 0.78);
+  --cork: #341a42;
   --window-bar: #4d2a5c;
   --gingham: rgba(240, 139, 176, 0.08);
   --shadow: 4px 6px 0 rgba(10, 4, 16, 0.45);
@@ -914,10 +930,830 @@ body.is-celebrating .site-header {
   box-shadow: 0 0 0 4px var(--mint), var(--shadow);
 }
 
+/* ========================================================
+   Strawberry Photobooth & Scrapbook Wall
+   ======================================================== */
+.bar-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.booth-subtag,
+.memory-count-chip {
+  background: var(--card);
+  border: 1px dashed var(--accent);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.booth-mode-pills {
+  display: flex;
+  gap: 4px;
+  background: var(--card-alt);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.mode-pill {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mode-pill.is-active {
+  background: var(--card);
+  color: var(--accent-deep);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.booth-toolbar {
+  background: var(--card-alt);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbar-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.field-label-inline {
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.checkbox-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.caption-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.caption-row input {
+  flex: 1;
+}
+
+.booth-stage-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.booth-stage {
+  position: relative;
+  min-height: 500px;
+  border-radius: 20px;
+  border: 2px solid var(--line);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: none;
+  user-select: none;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+/* Photobooth Borders & Themes */
+.booth-stage.theme-strawberry-milk {
+  background-color: #fff5f8;
+  background-image:
+    radial-gradient(#ffd4e2 15%, transparent 16%),
+    radial-gradient(#ffd4e2 15%, transparent 16%);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+.booth-stage.theme-berry-gingham {
+  background-color: #ffeef3;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 16px, rgba(227, 56, 84, 0.15) 16px, rgba(227, 56, 84, 0.15) 32px),
+    repeating-linear-gradient(90deg, transparent, transparent 16px, rgba(227, 56, 84, 0.15) 16px, rgba(227, 56, 84, 0.15) 32px);
+}
+
+.booth-stage.theme-ruby-sweet {
+  background: radial-gradient(circle, #ffe6ed 20%, #ffb8ca 90%);
+  border-color: var(--strawberry-red);
+}
+
+.booth-stage.theme-starry-plum {
+  background: #251230;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #ffb8cf, transparent),
+    radial-gradient(1.5px 1.5px at 60px 80px, #ffe27a, transparent),
+    radial-gradient(1px 1px at 140px 110px, #ffb8cf, transparent),
+    radial-gradient(1.5px 1.5px at 220px 40px, #ffffff, transparent);
+  background-size: 250px 180px;
+  border-color: #7b4088;
+}
+
+.booth-stage.theme-vintage-polaroid {
+  background: #faf4ea;
+  background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.015) 0, rgba(0, 0, 0, 0.015) 2px, transparent 2px, transparent 8px);
+  border-color: #e2d1be;
+}
+
+/* Strawberry Cutout Mode */
+.strawberry-frame-wrap {
+  position: relative;
+  width: min(390px, 94%);
+  height: 460px;
+  margin: 10px auto;
+  display: grid;
+  place-items: center;
+}
+
+.strawberry-body-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  clip-path: url(#strawberry-clip);
+  -webkit-clip-path: url(#strawberry-clip);
+  background: linear-gradient(180deg, #ffccd9 0%, #ffb3c6 40%, #ff8da6 100%);
+  box-shadow: inset 0 0 20px rgba(184, 35, 60, 0.25);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .strawberry-body-container {
+  background: linear-gradient(180deg, #5c203b 0%, #7d264f 40%, #501533 100%);
+}
+
+.strawberry-photo-area {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.strawberry-seeds-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 50% 50%, var(--strawberry-seed) 1.5px, transparent 2.5px);
+  background-size: 42px 48px;
+  opacity: 0.35;
+}
+
+.strawberry-leaves-top {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 85px;
+  pointer-events: none;
+  z-index: 10;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.15));
+}
+
+.strawberry-crown-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.crown-stem {
+  fill: #73513a;
+}
+
+.crown-leaf {
+  fill: var(--strawberry-leaf);
+  stroke: var(--strawberry-leaf-dark);
+  stroke-width: 1.5;
+}
+
+.crown-flower-center {
+  fill: #fff;
+  stroke: #ffe27a;
+  stroke-width: 2;
+}
+
+/* Interactive Photos */
+.booth-photo-item {
+  position: absolute;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transform-origin: center center;
+  border-radius: 8px;
+  transition: outline 0.1s ease;
+}
+
+.booth-photo-item.is-dragging {
+  cursor: grabbing;
+  z-index: 99 !important;
+}
+
+.booth-photo-item.is-selected {
+  outline: 2px dashed var(--accent);
+  box-shadow: 0 0 0 4px rgba(227, 109, 146, 0.35);
+}
+
+.booth-photo-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  border-radius: 6px;
+}
+
+/* Photo Strip Mode */
+.photo-strip-wrap {
+  width: 260px;
+  min-height: 480px;
+  background: var(--card);
+  border: 3px solid var(--accent);
+  border-radius: 16px;
+  padding: 12px 10px;
+  margin: 10px auto;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.strip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  border-bottom: 1.5px dashed var(--line);
+}
+
+.strip-brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--accent-deep);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.strip-slots-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.strip-slot {
+  width: 100%;
+  height: 110px;
+  background: var(--card-alt);
+  border: 1.5px dashed var(--line);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.slot-photo-holder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slot-photo-holder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: grab;
+}
+
+.slot-placeholder {
+  font-size: 0.75rem;
+  color: var(--muted);
+  pointer-events: none;
+  text-align: center;
+  padding: 4px;
+}
+
+.strip-footer {
+  text-align: center;
+  border-top: 1.5px dashed var(--line);
+  padding-top: 6px;
+}
+
+.strip-caption-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--accent-deep);
+}
+
+.strip-date-text {
+  margin: 2px 0 0;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* Scrapbook Collage Mode */
+.collage-wrap {
+  width: 100%;
+  height: 480px;
+  position: relative;
+  overflow: hidden;
+}
+
+.collage-board {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.collage-polaroid {
+  position: absolute;
+  background: #fff;
+  border-radius: 4px;
+  padding: 8px 8px 24px 8px;
+  box-shadow: 2px 6px 14px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transform-origin: center;
+}
+
+[data-theme="dark"] .collage-polaroid {
+  background: #3c2448;
+  box-shadow: 2px 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+.collage-polaroid.is-selected {
+  outline: 2px dashed var(--accent);
+}
+
+.collage-polaroid img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.polaroid-tape {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 45px;
+  height: 14px;
+  background: var(--washi-tape);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+/* Stage Draggable Stickers */
+.booth-placed-stickers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.stage-sticker {
+  position: absolute;
+  font-size: 2.2rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  pointer-events: auto;
+  transform-origin: center;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+  transition: outline 0.1s ease;
+}
+
+.stage-sticker.is-selected {
+  outline: 2px dashed var(--accent);
+  border-radius: 6px;
+}
+
+.stage-sticker.is-dragging {
+  cursor: grabbing;
+}
+
+/* Empty Prompt */
+.booth-empty-prompt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.empty-prompt-bubble {
+  background: rgba(255, 255, 255, 0.88);
+  border: 2px dashed var(--accent);
+  border-radius: 20px;
+  padding: 16px 24px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow);
+  max-width: 280px;
+}
+
+[data-theme="dark"] .empty-prompt-bubble {
+  background: rgba(45, 24, 58, 0.9);
+  border-color: var(--accent);
+}
+
+.prompt-icon {
+  font-size: 2.2rem;
+  margin: 0 0 4px;
+  animation: floaty 3s ease-in-out infinite;
+}
+
+.prompt-title {
+  font-weight: 700;
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+}
+
+.prompt-subtitle {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Floating Active Photo Bar */
+.active-photo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  margin-top: 8px;
+  box-shadow: var(--shadow);
+  flex-wrap: wrap;
+}
+
+.bar-tag {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.bar-buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mini-btn {
+  border: 1px solid var(--line);
+  background: var(--card-alt);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 4px 8px;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mini-btn:hover {
+  background: var(--card);
+  border-color: var(--accent);
+}
+
+.mini-btn-danger {
+  color: var(--cherry);
+}
+
+.mini-btn-danger:hover {
+  background: rgba(214, 69, 93, 0.12);
+}
+
+/* Photobooth Stickers Drawer */
+.booth-stickers-drawer {
+  background: var(--card-alt);
+  border: 1.5px dashed var(--line);
+  border-radius: 16px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.booth-stickers-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.booth-sticker-btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 12px;
+  padding: 5px 9px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.booth-sticker-btn:hover {
+  transform: scale(1.22) rotate(4deg);
+  background: var(--cream);
+}
+
+.booth-actions-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  justify-content: flex-start;
+}
+
+/* ========================================================
+   Scrapbook Wall / Pinboard
+   ======================================================== */
+.scrapbook-pinboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+  background: var(--cork);
+  border: 2px dashed var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  min-height: 120px;
+}
+
+.scrapbook-card {
+  position: relative;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 10px 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scrapbook-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 6px 10px 0 rgba(199, 77, 120, 0.22);
+}
+
+.scrapbook-tape {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 16px;
+  background: var(--washi-tape);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.scrapbook-img-wrap {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card-alt);
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.scrapbook-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.scrapbook-card:hover .scrapbook-img-wrap img {
+  transform: scale(1.04);
+}
+
+.scrapbook-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scrapbook-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.scrapbook-date {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.scrapbook-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  border-top: 1px dotted var(--line);
+  padding-top: 4px;
+}
+
+/* ========================================================
+   Music Corner Tabs & Spotify
+   ======================================================== */
+.music-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--card-alt);
+  padding: 4px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.music-tab-btn {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 6px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.music-tab-btn.is-active {
+  background: var(--card);
+  color: var(--accent-deep);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.spotify-input-row {
+  display: flex;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
+
+.spotify-input-row input {
+  flex: 1;
+}
+
+.presets-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.preset-chip {
+  border: 1px solid var(--line);
+  background: var(--card-alt);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 4px 8px;
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.preset-chip:hover {
+  background: var(--mint);
+}
+
+.spotify-embed-container {
+  margin: 10px 0 6px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1.5px solid var(--line);
+  background: #000;
+}
+
+.spotify-info-note {
+  text-align: left;
+  font-size: 0.74rem;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+/* ========================================================
+   Photo Enlargement Modal
+   ======================================================== */
+.photo-modal {
+  border: 2px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  color: var(--ink);
+  padding: 16px;
+  max-width: 620px;
+  width: 92%;
+  box-shadow: var(--shadow);
+}
+
+.photo-modal::backdrop {
+  background: rgba(40, 16, 32, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.photo-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.photo-modal-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.photo-modal-body {
+  display: grid;
+  place-items: center;
+  background: var(--card-alt);
+  border-radius: 12px;
+  padding: 8px;
+  border: 1px dashed var(--line);
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.photo-modal-body img {
+  max-width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.photo-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sparkle,
   .empty-icon,
-  .vinyl {
+  .vinyl,
+  .prompt-icon {
     animation: none !important;
   }
 }
@@ -965,6 +1801,42 @@ body.is-celebrating .site-header {
   .task-form select,
   .task-form input,
   .task-form .btn {
+    width: 100%;
+  }
+
+  .booth-mode-pills {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .toolbar-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-item {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .booth-stage {
+    min-height: 420px;
+  }
+
+  .strawberry-frame-wrap {
+    height: 390px;
+  }
+
+  .scrapbook-pinboard {
+    grid-template-columns: 1fr;
+  }
+
+  .booth-actions-row {
+    flex-direction: column;
+  }
+
+  .booth-actions-row .btn {
     width: 100%;
   }
 }
